@@ -1,5 +1,3 @@
-// TablaHash.java
-
 import java.util.LinkedList;
 
 public class TablaHash {
@@ -70,13 +68,113 @@ public class TablaHash {
     }
 
     // Inserción con Sondeo Lineal
-    public void insertarLineal(int key) { /* ... */ }
+    public void insertarLineal(int key) {
+        int index = hash(key);
+        while (tablaLineal[index] != null) {
+            index = (index + 1) % SIZE;
+        }
+        tablaLineal[index] = key;
+    }
 
     // Inserción con Sondeo Cuadrático
-    public void insertarCuadratico(int key) { /* ... */ }
+    public void insertarCuadratico(int key) {
+        int index = hash(key);
+        int i = 1;
+        while (tablaCuadratica[index] != null) {
+            index = (index + i * i) % SIZE;
+            i++;
+        }
+        tablaCuadratica[index] = key;
+    }
 
     // Inserción con Hashing Abierto (Lista Enlazada)
-    public void insertarAbierto(int key) { /* ... */ }
+    public void insertarAbierto(int key) {
+        int index = hash(key);
+        tablaAbierta[index].add(key);
+    }
 
-    // Métodos de búsqueda y eliminación también están implementados, como ya tienes en tu código
+    // Búsqueda con Sondeo Lineal
+    public Integer buscarLineal(int key) {
+        int index = hash(key);
+        int startIndex = index;
+        while (tablaLineal[index] != null) {
+            if (tablaLineal[index].equals(key)) {
+                return tablaLineal[index];
+            }
+            index = (index + 1) % SIZE;
+            if (index == startIndex) {
+                break; // Evita bucles infinitos
+            }
+        }
+        return null;
+    }
+
+    // Búsqueda con Sondeo Cuadrático
+    public Integer buscarCuadratico(int key) {
+        int index = hash(key);
+        int i = 1;
+        int startIndex = index;
+        while (tablaCuadratica[index] != null) {
+            if (tablaCuadratica[index].equals(key)) {
+                return tablaCuadratica[index];
+            }
+            index = (startIndex + i * i) % SIZE;
+            i++;
+            if (index == startIndex) {
+                break; // Evita bucles infinitos
+            }
+        }
+        return null;
+    }
+
+    // Búsqueda con Hashing Abierto
+    public Integer buscarAbierto(int key) {
+        int index = hash(key);
+        for (Integer value : tablaAbierta[index]) {
+            if (value.equals(key)) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    // Eliminación con Sondeo Lineal
+    public void eliminarLineal(int key) {
+        int index = hash(key);
+        int startIndex = index;
+        while (tablaLineal[index] != null) {
+            if (tablaLineal[index].equals(key)) {
+                tablaLineal[index] = null;
+                return;
+            }
+            index = (index + 1) % SIZE;
+            if (index == startIndex) {
+                break;
+            }
+        }
+    }
+
+    // Eliminación con Sondeo Cuadrático
+    public void eliminarCuadratico(int key) {
+        int index = hash(key);
+        int i = 1;
+        int startIndex = index;
+        while (tablaCuadratica[index] != null) {
+            if (tablaCuadratica[index].equals(key)) {
+                tablaCuadratica[index] = null;
+                return;
+            }
+            index = (startIndex + i * i) % SIZE;
+            i++;
+            if (index == startIndex) {
+                break;
+            }
+        }
+    }
+
+    // Eliminación con Hashing Abierto
+    public void eliminarAbierto(int key) {
+        int index = hash(key);
+        tablaAbierta[index].removeIf(value -> value.equals(key));
+    }
 }
