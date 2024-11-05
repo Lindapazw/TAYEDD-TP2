@@ -1,3 +1,6 @@
+// Nombre: Linda Candela Paz
+// DNI: 42.379.854
+
 public class BibliotecaApp {
    public static void main(String[] args) {
        TablaHash tabla = new TablaHash();

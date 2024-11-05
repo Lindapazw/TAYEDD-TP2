@@ -1,3 +1,6 @@
+// Nombre: Linda Candela Paz
+// DNI: 42.379.854
+
 import java.util.LinkedList;
 
 public class TablaHash {
